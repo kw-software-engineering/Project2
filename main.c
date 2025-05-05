@@ -171,21 +171,19 @@ void sizecmp() {
 void blockcmp() {
     printf("블록 수 비교:\n");
     if (stat1.st_blocks > stat2.st_blocks)
-        printf("%suses more blocks.\n", filename1);
+        printf("%s uses more blocks.\n", filename1);
     else if (stat1.st_blocks < stat2.st_blocks)
-        printf("%suses more blocks.\n", filename2);
+        printf("%s uses more blocks.\n", filename2);
     else
         printf("Blocks are same.\n");
 }
 
-//두 개의 파일 수정날짜를 비교하는 함수 작성
-void compare_date(void)
-{
-
+// 두 개의 파일 수정 날짜를 비교하는 함수 작성 (월/일)
+void datecmp() {
+    
 }
 
-//두 개의 파일 수정 시간을 비교하는 함수 작성
-void compare_time(void)
-{
-
+// 두 개의 파일 수정 시간을 비교하는 함수 작성 (시/분)
+void timecmp() {
+    
 }
