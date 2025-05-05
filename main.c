@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -7,9 +7,6 @@
 
 struct stat stat1, stat2;
 struct tm* time1, * time2;
-
-char filename1[] = "file1.txt";
-char filename2[] = "file2.txt";
 
 void filestat1();
 void filestat2();
@@ -157,35 +154,25 @@ void filetime2(void)
 }
 
 //두 개의 파일 크기를 비교하는 함수 작성
-void sizecmp() {
-    printf("파일 크기 비교:\n");
-    if (stat1.st_size > stat2.st_size)
-        printf("%s is bigger.\n", filename1);
-    else if (stat1.st_size < stat2.st_size)
-        printf("%s is bigger.\n", filename2);
-    else
-        printf("Size are equal.\n");
+void compare_size(void)
+{
+    
 }
 
 //두 개의 파일 블락 수를 비교하는 함수 작성
-void blockcmp() {
-    printf("블록 수 비교:\n");
-    if (stat1.st_blocks > stat2.st_blocks)
-        printf("%suses more blocks.\n", filename1);
-    else if (stat1.st_blocks < stat2.st_blocks)
-        printf("%suses more blocks.\n", filename2);
-    else
-        printf("Blocks are same.\n");
+void compare_block(void)
+{
+    
 }
 
 //두 개의 파일 수정날짜를 비교하는 함수 작성
 void compare_date(void)
 {
-
+    
 }
 
 //두 개의 파일 수정 시간을 비교하는 함수 작성
 void compare_time(void)
 {
-
+    
 }
