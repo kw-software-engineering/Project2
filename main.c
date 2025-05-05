@@ -20,7 +20,6 @@ void blockcmp();
 void datecmp();
 void timecmp();
 
-
 int main()
 {
     filestat1();
@@ -31,7 +30,6 @@ int main()
     blockcmp();
     datecmp();
     timecmp();
-
     return 0;
 }
 
@@ -57,10 +55,12 @@ void filestat2() {
 void filetime1(void)
 {
 
+
     // 수정 시간 정보만 구조체에 저장
     struct tm* tmp = localtime(&stat1.st_mtime);
     time1 = malloc(sizeof(struct tm));
     *time1 = *tmp;
+
 
 
 }
@@ -68,41 +68,52 @@ void filetime1(void)
 //파일 2의 시간 정보를 가져오는 함수 작성
 void filetime2(void)
 {
+
     // 수정 시간 정보만 구조체에 저장
     struct tm* tmp = localtime(&stat2.st_mtime);
     time2 = malloc(sizeof(struct tm));
     *time2 = *tmp;
+
 }
 
 //두 개의 파일 크기를 비교하는 함수 작성
 void sizecmp() {
+
     printf("size compare\n");
+
     if (stat1.st_size > stat2.st_size)
         printf("%s is bigger.\n", filename1);
     else if (stat1.st_size < stat2.st_size)
         printf("%s is bigger.\n", filename2);
     else
         printf("Size are equal.\n");
-    
+
     printf("\n");
+
 }
 
 //두 개의 파일 블락 수를 비교하는 함수 작성
 void blockcmp() {
+
     printf("block compare\n");
+
     if (stat1.st_blocks > stat2.st_blocks)
         printf("%s uses more blocks.\n", filename1);
     else if (stat1.st_blocks < stat2.st_blocks)
         printf("%s uses more blocks.\n", filename2);
     else
+
         printf("Size are equal.\n");
 
     printf("\n");
+
 }
 
 // 두 개의 파일 수정 날짜를 비교하는 함수 작성 (월/일)
 void datecmp() {
+
     printf("date compare\n"); // 함수가 호출되었음을 알림
+
 
     // 월을 먼저 비교하고, 같으면 일을 비교합니다.
     if (time1->tm_mon < time2->tm_mon) {
@@ -123,12 +134,15 @@ void datecmp() {
         }
     }
     printf("\n");
+
 }
 
 
 // 두 개의 파일 수정 시간을 비교하는 함수 작성 (시/분)
 void timecmp() {
+
     printf("time compare\n"); // 함수가 호출되었음을 알림
+
 
     // 시간을 먼저 비교하고, 같으면 분을 비교합니다.
     if (time1->tm_hour < time2->tm_hour) {
@@ -148,5 +162,7 @@ void timecmp() {
             printf("same time\n");
         }
     }
+
     printf("\n");
+
 }
