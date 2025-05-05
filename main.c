@@ -8,6 +8,7 @@
 struct stat stat1, stat2;
 struct tm* time1, * time2;
 
+//파일이름 간략화
 char filename1[] = "text1";
 char filename2[] = "text2";
 
@@ -78,9 +79,9 @@ void filetime2(void)
 
 //두 개의 파일 크기를 비교하는 함수 작성
 void sizecmp() {
-
+    //파일 비교문구
     printf("size compare\n");
-
+    //sta1, stat2 비교
     if (stat1.st_size > stat2.st_size)
         printf("%s is bigger.\n", filename1);
     else if (stat1.st_size < stat2.st_size)
@@ -94,9 +95,9 @@ void sizecmp() {
 
 //두 개의 파일 블락 수를 비교하는 함수 작성
 void blockcmp() {
-
+    //블럭 비교문구
     printf("block compare\n");
-
+    //sta1, sta2를 비교
     if (stat1.st_blocks > stat2.st_blocks)
         printf("%s uses more blocks.\n", filename1);
     else if (stat1.st_blocks < stat2.st_blocks)
