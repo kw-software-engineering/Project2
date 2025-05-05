@@ -33,9 +33,6 @@ int main(void)
 
     return 0;
 }
-//파일 1의 정보를 가져오는 함수 작성
-struct stat stat1, stat2;
-struct tm *time1, *time2;
 
 char filename1[] = "file1.txt";
 char filename2[] = "file2.txt";
@@ -107,9 +104,9 @@ void sizecmp(){
 void blockcmp(){
     printf("블록 수 비교:\n");
     if (stat1.st_blocks > stat2.st_blocks)
-        printf("%suses more blocks.\n", filename1);
+        printf("%s uses more blocks.\n", filename1);
     else if (stat1.st_blocks < stat2.st_blocks)
-        printf("%suses more blocks.\n", filename2);
+        printf("%s uses more blocks.\n", filename2);
     else
         printf("Blocks are same.\n");
 }
