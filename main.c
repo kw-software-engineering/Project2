@@ -8,8 +8,8 @@
 struct stat stat1, stat2;
 struct tm* time1, * time2;
 
-char filename1[] = "file1.txt";
-char filename2[] = "file2.txt";
+char filename1[] = "text1";
+char filename2[] = "text2";
 
 void filestat1();
 void filestat2();
