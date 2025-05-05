@@ -6,7 +6,7 @@
 #include <string.h>
 
 struct stat stat1, stat2;
-struct tm *time1, *time2;
+struct tm* time1, * time2;
 
 void filestat1();
 void filestat2();
@@ -17,7 +17,8 @@ void blockcmp();
 void datecmp();
 void timecmp();
 
-int main(){
+int main()
+{
     char command[100];
 
     while (1) {
@@ -26,24 +27,33 @@ int main(){
 
         if (strcmp(command, "filestat1") == 0) {
             filestat1();
-        } else if (strcmp(command, "filestat2") == 0) {
+        }
+        else if (strcmp(command, "filestat2") == 0) {
             filestat2();
-        } else if (strcmp(command, "filetime1") == 0) {
+        }
+        else if (strcmp(command, "filetime1") == 0) {
             filetime1();
-        } else if (strcmp(command, "filetime2") == 0) {
+        }
+        else if (strcmp(command, "filetime2") == 0) {
             filetime2();
-        } else if (strcmp(command, "sizecmp") == 0) {
+        }
+        else if (strcmp(command, "sizecmp") == 0) {
             sizecmp();
-        } else if (strcmp(command, "blockcmp") == 0) {
+        }
+        else if (strcmp(command, "blockcmp") == 0) {
             blockcmp();
-        } else if (strcmp(command, "datecmp") == 0) {
+        }
+        else if (strcmp(command, "datecmp") == 0) {
             datecmp();
-        } else if (strcmp(command, "timecmp") == 0) {
+        }
+        else if (strcmp(command, "timecmp") == 0) {
             timecmp();
-        } else if (strcmp(command, "exit") == 0) {
+        }
+        else if (strcmp(command, "exit") == 0) {
             printf("EXIT\n");
             break;
-        } else {
+        }
+        else {
             printf("Unknown command\n");
         }
     }
@@ -52,7 +62,7 @@ int main(){
 }
 
 //파일 1의 정보를 가져오는 함수 작성
-void filestat1(){
+void filestat1() {
     if (stat("text1", &stat1) == -1) {
         perror("text1 정보를 가져올 수 없습니다");
         return;
@@ -86,7 +96,7 @@ void filestat1(){
 }
 
 //파일 2의 정보를 가져오는 함수 작성
-void filestat2(){
+void filestat2() {
     if (stat("text2", &stat2) == -1) {
         perror("text2 정보를 가져올 수 없습니다");
         return;
@@ -119,31 +129,50 @@ void filestat2(){
 }
 
 //파일 1의 시간 정보를 가져오는 함수 작성
-void filetime1(){
-  
+void filetime1(void)
+{
+    // stat 함수로 파일 정보 가져오기
+    if (stat("text1", &stat1) == -1) {
+        perror("text1 Error");  // 예외처리
+        return;
+    }
+
+    // 수정 시간 정보만 구조체에 저장
+    time1 = localtime(&stat1.st_mtime);
+
 }
 
 //파일 2의 시간 정보를 가져오는 함수 작성
-void filetime2(){
-    
+void filetime2(void)
+{
+    if (stat("text2", &stat2) == -1) {
+        perror("text2 Error");  //예외처리
+        return;
+    }
+    // 수정 시간 정보만 구조체에 저장
+    time2 = localtime(&stat2.st_mtime);
 }
 
 //두 개의 파일 크기를 비교하는 함수 작성
-void sizecmp(){
+void compare_size(void)
+{
     
 }
 
 //두 개의 파일 블락 수를 비교하는 함수 작성
-void blockcmp(){
+void compare_block(void)
+{
     
 }
 
-//두 개의 파일 수정 날짜를 비교하는 함수 작성
-void datecmp(){
+//두 개의 파일 수정날짜를 비교하는 함수 작성
+void compare_date(void)
+{
     
 }
 
 //두 개의 파일 수정 시간을 비교하는 함수 작성
-void timecmp(){
+void compare_time(void)
+{
     
 }
