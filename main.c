@@ -1,12 +1,15 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
-#include <string.h>
+#include <stdlib.h>
 
 struct stat stat1, stat2;
-struct tm *time1, *time2;
+struct tm* time1, * time2;
+
+char filename1[] = "text1";
+char filename2[] = "text2";
 
 void filestat1();
 void filestat2();
@@ -17,133 +20,132 @@ void blockcmp();
 void datecmp();
 void timecmp();
 
-int main(){
-    char command[100];
-
-    while (1) {
-
-        scanf("%s", command);
-
-        if (strcmp(command, "filestat1") == 0) {
-            filestat1();
-        } else if (strcmp(command, "filestat2") == 0) {
-            filestat2();
-        } else if (strcmp(command, "filetime1") == 0) {
-            filetime1();
-        } else if (strcmp(command, "filetime2") == 0) {
-            filetime2();
-        } else if (strcmp(command, "sizecmp") == 0) {
-            sizecmp();
-        } else if (strcmp(command, "blockcmp") == 0) {
-            blockcmp();
-        } else if (strcmp(command, "datecmp") == 0) {
-            datecmp();
-        } else if (strcmp(command, "timecmp") == 0) {
-            timecmp();
-        } else if (strcmp(command, "exit") == 0) {
-            printf("EXIT\n");
-            break;
-        } else {
-            printf("Unknown command\n");
-        }
-    }
+int main()
+{
+    filestat1();
+    filestat2();
+    filetime1();
+    filetime2();
+    sizecmp();
+    blockcmp();
+    datecmp();
+    timecmp();
 
     return 0;
 }
 
 //파일 1의 정보를 가져오는 함수 작성
-void filestat1(){
+void filestat1() {
     if (stat("text1", &stat1) == -1) {
         perror("text1 정보를 가져올 수 없습니다");
         return;
     }
-
-    // 수정 시간
-    time1 = localtime(&stat1.st_mtime);
-
-    printf("=== 파일 1 정보 (file1.txt) ===\n");
-    printf("크기: %ld bytes\n", stat1.st_size);
-    printf("최근 접근 시간: %s", ctime(&stat1.st_atime));
-    printf("최근 수정 시간: %s", ctime(&stat1.st_mtime));
-    printf("i-node 변경 시간: %s", ctime(&stat1.st_ctime));
-    printf("소유자 UID: %d\n", stat1.st_uid);
-    printf("소유 그룹 GID: %d\n", stat1.st_gid);
-    printf("권한 (8진수): %o\n", stat1.st_mode & 0777);
-    printf("하드 링크 수: %ld\n", stat1.st_nlink);
-
-    if (S_ISREG(stat1.st_mode))
-        printf("파일 타입: 일반 파일\n");
-    else if (S_ISDIR(stat1.st_mode))
-        printf("파일 타입: 디렉토리\n");
-    else if (S_ISLNK(stat1.st_mode))
-        printf("파일 타입: 심볼릭 링크\n");
-    else
-        printf("파일 타입: 기타\n");
-
-    printf("블록 크기 (I/O 최적): %ld bytes\n", stat1.st_blksize);
-    printf("할당된 블록 수: %ld (총 %ld bytes)\n\n", stat1.st_blocks, stat1.st_blocks * 512L);
-
+    
 }
 
 //파일 2의 정보를 가져오는 함수 작성
-void filestat2(){
+void filestat2() {
     if (stat("text2", &stat2) == -1) {
         perror("text2 정보를 가져올 수 없습니다");
         return;
     }
 
-    time2 = localtime(&stat2.st_mtime);
-
-    printf("=== 파일 2 정보 (file2.txt) ===\n");
-    printf("크기: %ld bytes\n", stat2.st_size);
-    printf("최근 접근 시간: %s", ctime(&stat2.st_atime));
-    printf("최근 수정 시간: %s", ctime(&stat2.st_mtime));
-    printf("i-node 변경 시간: %s", ctime(&stat2.st_ctime));
-    printf("소유자 UID: %d\n", stat2.st_uid);
-    printf("소유 그룹 GID: %d\n", stat2.st_gid);
-    printf("권한 (8진수): %o\n", stat2.st_mode & 0777);
-    printf("하드 링크 수: %ld\n", stat2.st_nlink);
-
-    if (S_ISREG(stat2.st_mode))
-        printf("파일 타입: 일반 파일\n");
-    else if (S_ISDIR(stat2.st_mode))
-        printf("파일 타입: 디렉토리\n");
-    else if (S_ISLNK(stat2.st_mode))
-        printf("파일 타입: 심볼릭 링크\n");
-    else
-        printf("파일 타입: 기타\n");
-
-    printf("블록 크기 (I/O 최적): %ld bytes\n", stat2.st_blksize);
-    printf("할당된 블록 수: %ld (총 %ld bytes)\n\n", stat2.st_blocks, stat2.st_blocks * 512L);
-
 }
 
 //파일 1의 시간 정보를 가져오는 함수 작성
-void filetime1(){
-  
+void filetime1(void)
+{
+
+    // 수정 시간 정보만 구조체에 저장
+    struct tm* tmp = localtime(&stat1.st_mtime);
+    time1 = malloc(sizeof(struct tm));
+    *time1 = *tmp;
+
+
 }
 
 //파일 2의 시간 정보를 가져오는 함수 작성
-void filetime2(){
-    
+void filetime2(void)
+{
+    // 수정 시간 정보만 구조체에 저장
+    struct tm* tmp = localtime(&stat2.st_mtime);
+    time2 = malloc(sizeof(struct tm));
+    *time2 = *tmp;
 }
 
 //두 개의 파일 크기를 비교하는 함수 작성
-void sizecmp(){
+void sizecmp() {
+    printf("size compare\n");
+    if (stat1.st_size > stat2.st_size)
+        printf("%s is bigger.\n", filename1);
+    else if (stat1.st_size < stat2.st_size)
+        printf("%s is bigger.\n", filename2);
+    else
+        printf("Size are equal.\n");
     
+    printf("\n");
 }
 
 //두 개의 파일 블락 수를 비교하는 함수 작성
-void blockcmp(){
-    
+void blockcmp() {
+    printf("block compare\n");
+    if (stat1.st_blocks > stat2.st_blocks)
+        printf("%s uses more blocks.\n", filename1);
+    else if (stat1.st_blocks < stat2.st_blocks)
+        printf("%s uses more blocks.\n", filename2);
+    else
+        printf("Size are equal.\n");
+
+    printf("\n");
 }
 
-//두 개의 파일 수정 날짜를 비교하는 함수 작성
-void datecmp(){
-    
+// 두 개의 파일 수정 날짜를 비교하는 함수 작성 (월/일)
+void datecmp() {
+    printf("date compare\n"); // 함수가 호출되었음을 알림
+
+    // 월을 먼저 비교하고, 같으면 일을 비교합니다.
+    if (time1->tm_mon < time2->tm_mon) {
+        printf("text1 is early\n"); // 월이 작으면 더 과거 날짜
+    }
+    else if (time1->tm_mon > time2->tm_mon) {
+        printf("text2 is early\n"); // 월이 크면 더 최근 날짜
+    }
+    else { // 월이 같으면 일 비교
+        if (time1->tm_mday < time2->tm_mday) {
+            printf("text1 is early\n"); // 일이 작으면 더 과거 날짜
+        }
+        else if (time1->tm_mday > time2->tm_mday) {
+            printf("text2 is early\n"); // 일이 크면 더 최근 날짜
+        }
+        else { // 일까지 같으면 날짜 동일
+            printf("same date\n");
+        }
+    }
+    printf("\n");
 }
 
-//두 개의 파일 수정 시간을 비교하는 함수 작성
-void timecmp(){
-    
+
+// 두 개의 파일 수정 시간을 비교하는 함수 작성 (시/분)
+void timecmp() {
+    printf("time compare\n"); // 함수가 호출되었음을 알림
+
+    // 시간을 먼저 비교하고, 같으면 분을 비교합니다.
+    if (time1->tm_hour < time2->tm_hour) {
+        printf("text1 is early\n"); // 시간이 작으면 더 과거 시간
+    }
+    else if (time1->tm_hour > time2->tm_hour) {
+        printf("text2 is early\n"); // 시간이 크면 더 최근 시간
+    }
+    else { // 시간이 같으면 분 비교
+        if (time1->tm_min < time2->tm_min) {
+            printf("text1 is early\n"); // 분이 작으면 더 과거 시간
+        }
+        else if (time1->tm_min > time2->tm_min) {
+            printf("text2 is early\n"); // 분이 크면 더 최근 시간
+        }
+        else { // 분까지 같으면 시간 동일
+            printf("same time\n");
+        }
+    }
+    printf("\n");
 }
